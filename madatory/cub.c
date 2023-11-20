@@ -1,0 +1,74 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oelboukh <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/19 01:01:23 by oelboukh          #+#    #+#             */
+/*   Updated: 2023/11/19 02:13:32 by oelboukh         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+#include "file.h"
+
+int	count_pinter(char **ptr)
+{
+	int	i;
+
+	i = 0;
+	while (ptr[i])
+	{
+		i++;
+	}
+	return (i);
+}
+
+int	count(char **str)
+{
+	int	i;
+	int	x;
+	int	l;
+
+	l = 0;
+	i = 0;
+	x = 0;
+	if (strcmp(str[0], "F") && strcmp(str[0], "C"))
+		return (-1);
+	if (!str[1])
+		return (-1);
+	else
+		i = 1;
+	while (str[i][l])
+	{
+		if (str[i][l] == ',')
+			x++;
+		if (str[i][l] != ',' && (str[i][l] < '0' || str[i][l] > '9'))
+			return (-1);
+		l++;
+	}
+	if (x > 2 || x < 2)
+		return (-1);
+	return (0);
+}
+
+int	check_final(t_textr *txtr)
+{
+	if (count_pinter(txtr->color_c) > 2 || count_pinter(txtr->color_f) > 2)
+		return (-1);
+	if (count(txtr->color_c) == -1 || count(txtr->color_f) == -1)
+		return (-1);
+	return (0);
+}
+
+void	collect(t_garbage **garb, char **str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		ft_lst_add_back(garb, ft_lst_new(str[i]));
+		i++;
+	}
+	ft_lst_add_back(garb, ft_lst_new(str));
+}
